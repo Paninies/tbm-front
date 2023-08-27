@@ -1,22 +1,32 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="column q-ma-md">
+
+
+
+    <div class="q-gutter-md">
+      <div class="q-col-xs-12 q-col-md-6 q-mb-md" style="height: 100px;">
+        <div class="entry q-card cursor-pointer" >
+          <main-component class="col bg-white "/>
+        </div>
+      </div>
+      <div class="q-col-xs-12 q-col-md-6 q-mb-md">
+        <div class="details q-card">
+          <service-communicator class="col"/>
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
 import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+import MainComponent from 'components/MainComponent.vue';
+import ServiceCommunicator from 'components/ServiceCommunicator.vue';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { ExampleComponent },
+  components: { MainComponent, ServiceCommunicator },
   setup () {
     const todos = ref<Todo[]>([
       {
