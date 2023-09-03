@@ -1,13 +1,17 @@
 <template>
   <div class="q-pa-md">
+
+
     <q-page-container>
       <q-page>
+        <p> Selected service: {{ selectedOption }}</p>
+        <p> Selected service: {{ selectedService }}</p>
         <div class="q-gutter-md">
           <div
             class="entry q-card q-mb-md cursor-pointer"
             v-for="entry in sortedEntries"
             :key="entry.id"
-            @click="selectedEntry = entry"
+
           >
             <q-card-section>
               <h4>{{ entry.service }} - {{ entry.callType }}</h4>
@@ -28,7 +32,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {computed, ref} from "vue";
+import {useSelectedOption, useSelectedServiceOption} from "stores/example-store";
+
 export default {
   data() {
     return {
@@ -52,6 +59,26 @@ export default {
       ]
     };
   },
+
+  setup() {
+    const selectedOptionStore = useSelectedOption();
+    const selectedServiceOptionStore = useSelectedServiceOption();
+
+    const selectedService = ref(selectedServiceOptionStore.getSelectedServiceOption);
+    const selectedOption = computed(() => selectedOptionStore.getSelectedOption);
+
+
+    const serviceOptions = ref( ['Service A', 'Service B', 'Service C'] );
+
+    return {
+      options: ["Rest", "Kafka"],
+      selectedOption,
+      serviceServiceOptions: serviceOptions,
+      selectedService,
+
+    };
+  },
+
   computed: {
     sortedEntries() {
       return this.requestResponseList.slice().sort((a, b) => {
@@ -60,7 +87,13 @@ export default {
         }
         return a.callType.localeCompare(b.callType);
       });
-    }
+    },
+  },
+
+  methods: {
+    getSelectedOption() {
+      return this.selectedOption;
+    },
   }
 };
 </script>
